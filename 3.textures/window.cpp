@@ -124,11 +124,11 @@ void Window::initializeTextures()
         close();
         return;
     }
-    image1 = image1.convertToFormat(QImage::Format_RGB888);
+    image1 = image1.convertToFormat(QImage::Format_RGBA8888);
 
     _funcs->glGenTextures(1, &_texture1);
     _funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image1.width(), image1.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, image1.bits());
+    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image1.width(), image1.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image1.bits());
     _funcs->glGenerateMipmap(GL_TEXTURE_2D);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -139,11 +139,11 @@ void Window::initializeTextures()
         close();
         return;
     }
-    image2 = image2.convertToFormat(QImage::Format_RGB888);
+    image2 = image2.convertToFormat(QImage::Format_RGBA8888);
 
     _funcs->glGenTextures(1, &_texture2);
     _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image2.width(), image2.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, image2.bits());
+    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image2.width(), image2.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image2.bits());
     _funcs->glGenerateMipmap(GL_TEXTURE_2D);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
 }
