@@ -52,11 +52,11 @@ void Window::paintGL()
 
     _funcs->glActiveTexture(GL_TEXTURE0);
     _funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
-    _funcs->glUniform1i(_program->uniformLocation("ourTexture1"), 0);
+    _program->setUniformValue("ourTexture1", 0);
 
     _funcs->glActiveTexture(GL_TEXTURE1);
     _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
-    _funcs->glUniform1i(_program->uniformLocation("ourTexture2"), 1);
+    _program->setUniformValue("ourTexture2", 1);
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
     _funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
