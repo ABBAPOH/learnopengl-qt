@@ -23,6 +23,7 @@ private:
     void initializeGeometry();
     void initializeShaders();
     void initializeTextures();
+    GLuint createTexture(QStringView path);
 
 private:
     QOpenGLFunctions_3_3_Core *_funcs {nullptr};

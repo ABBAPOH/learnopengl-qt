@@ -117,33 +117,26 @@ void Window::initializeShaders()
 
 void Window::initializeTextures()
 {
-    // texture 1
-    QImage image1(":/container.jpg");
-    if (image1.isNull()) {
-        qCritical() << "Can't load image";
-        close();
-        return;
-    }
-    image1 = image1.convertToFormat(QImage::Format_RGBA8888);
+    _texture1 = createTexture(u":/container.jpg");
+    _texture2 = createTexture(u":/awesomeface.png");
+}
 
-    _funcs->glGenTextures(1, &_texture1);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image1.width(), image1.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image1.bits());
+GLuint Window::createTexture(QStringView path)
+{
+    QImage image(path.toString());
+    if (image.isNull()) {
+        qCritical() << "Can't load image" << path;
+        close();
+        return 0;
+    }
+    image = image.convertToFormat(QImage::Format_RGBA8888);
+
+    GLuint result {0};
+    _funcs->glGenTextures(1, &result);
+    _funcs->glBindTexture(GL_TEXTURE_2D, result);
+    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
     _funcs->glGenerateMipmap(GL_TEXTURE_2D);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
 
-    // texture 2
-    QImage image2(":/awesomeface.png");
-    if (image2.isNull()) {
-        qCritical() << "Can't load image";
-        close();
-        return;
-    }
-    image2 = image2.convertToFormat(QImage::Format_RGBA8888);
-
-    _funcs->glGenTextures(1, &_texture2);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image2.width(), image2.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image2.bits());
-    _funcs->glGenerateMipmap(GL_TEXTURE_2D);
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    return result;
 }
