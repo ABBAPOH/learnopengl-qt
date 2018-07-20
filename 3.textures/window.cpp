@@ -19,7 +19,6 @@ const char* const vertexShaderSource = "\n"
 "    gl_Position = vec4(position, 1.0);\n"
 "    ourColor = color;\n"
 "    TexCoord = vec2(texCoord.x, 1.0f - texCoord.y);\n"
-//"    TexCoord = texCoord;\n"
 "}";
 
 const char *const fragmentShaderSource =
@@ -167,6 +166,7 @@ void Window::initializeTextures()
     _funcs->glGenerateMipmap(GL_TEXTURE_2D);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
 
+    // texture 2
     QImage image2(":/awesomeface.png");
     if (image2.isNull()) {
         qCritical() << "Can't load image";
@@ -175,11 +175,9 @@ void Window::initializeTextures()
     }
     image2 = image2.convertToFormat(QImage::Format_RGB888);
 
-    // texture 2
     _funcs->glGenTextures(1, &_texture2);
     _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
     _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image2.width(), image2.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, image2.bits());
     _funcs->glGenerateMipmap(GL_TEXTURE_2D);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
-
 }
