@@ -38,48 +38,23 @@ Window::Window()
 void Window::initializeGL()
 {
     if (!context()) {
-        throw std::runtime_error("Can't get OGL context");
+        qCritical() << "Can't get OGL context";
+        close();
+        return;
     }
+
     _funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     if (!_funcs) {
         qCritical() << "Can't get OGL 3.2";
-        qApp->quit();
+        close();
         return;
     }
+
     _funcs->initializeOpenGLFunctions();
     qInfo() << "real OGL version" << (char *)_funcs->glGetString(GL_VERSION);
 
-    { // setup vertex data
-
-        GLfloat vertices[] = {
-            // Позиции           // Цвета
-             0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
-            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
-             0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
-        };
-
-        _vao.create();
-        QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
-
-        _vbo.create();
-        _vbo.bind();
-        _vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-        _vbo.allocate(vertices, sizeof(vertices));
-
-        // Атрибут с координатами
-        _funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-        _funcs->glEnableVertexAttribArray(0);
-        // Атрибут с цветом
-        _funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
-        _funcs->glEnableVertexAttribArray(1);
-    }
-
-    _program = std::make_unique<QOpenGLShaderProgram>();
-    _program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
-    _program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
-    _program->link();
-
-    vertexColorLocation = _program->uniformLocation("ourColor");
+    initializeGeometry();
+    initializeShaders();
 }
 
 void Window::resizeGL(int w, int h)
@@ -103,4 +78,41 @@ void Window::paintGL()
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
     _funcs->glDrawArrays(GL_TRIANGLES, 0, 3);
     _program->release();
+}
+
+void Window::initializeGeometry()
+{
+    // setup vertex data
+
+    GLfloat vertices[] = {
+        // Позиции           // Цвета
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
+    };
+
+    _vao.create();
+    QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
+
+    _vbo.create();
+    _vbo.bind();
+    _vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    _vbo.allocate(vertices, sizeof(vertices));
+
+    // Атрибут с координатами
+    _funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+    _funcs->glEnableVertexAttribArray(0);
+    // Атрибут с цветом
+    _funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
+    _funcs->glEnableVertexAttribArray(1);
+}
+
+void Window::initializeShaders()
+{
+    _program = std::make_unique<QOpenGLShaderProgram>();
+    _program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
+    _program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    _program->link();
+
+    vertexColorLocation = _program->uniformLocation("ourColor");
 }

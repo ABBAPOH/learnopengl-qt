@@ -20,6 +20,10 @@ protected:
     void paintGL() override;
 
 private:
+    void initializeGeometry();
+    void initializeShaders();
+
+private:
     QOpenGLFunctions_3_3_Core *_funcs {nullptr};
     QOpenGLBuffer _vbo {QOpenGLBuffer::VertexBuffer};
     QOpenGLVertexArrayObject _vao;
