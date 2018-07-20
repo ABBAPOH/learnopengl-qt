@@ -28,7 +28,6 @@ private:
     QOpenGLBuffer _vbo {QOpenGLBuffer::VertexBuffer};
     QOpenGLVertexArrayObject _vao;
     std::unique_ptr<QOpenGLShaderProgram> _program;
-    int vertexColorLocation;
 };
 
 #endif // WINDOW_H

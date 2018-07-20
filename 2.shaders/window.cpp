@@ -74,7 +74,6 @@ void Window::paintGL()
     _funcs->glClear(GL_COLOR_BUFFER_BIT);
 
     _program->bind();
-    _program->setUniformValue(vertexColorLocation, QVector4D(0.0f, QTime::currentTime().second() / 60.0f, 0.0f, 1.0f));
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
     _funcs->glDrawArrays(GL_TRIANGLES, 0, 3);
     _program->release();
@@ -113,6 +112,4 @@ void Window::initializeShaders()
     _program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
     _program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
     _program->link();
-
-    vertexColorLocation = _program->uniformLocation("ourColor");
 }
