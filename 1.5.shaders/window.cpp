@@ -25,7 +25,6 @@ void Window::initializeGL()
     }
 
     _funcs->initializeOpenGLFunctions();
-    qInfo() << "real OGL version" << (char *)_funcs->glGetString(GL_VERSION);
 
     initializeGeometry();
     initializeShaders();
