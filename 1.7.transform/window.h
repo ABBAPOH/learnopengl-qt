@@ -27,11 +27,11 @@ private:
     GLuint createTexture(QStringView path);
 
 private:
-    QOpenGLFunctions_3_3_Core *_funcs {nullptr};
-    QOpenGLBuffer _vbo {QOpenGLBuffer::VertexBuffer};
-    QOpenGLBuffer _ibo {QOpenGLBuffer::IndexBuffer};
-    QOpenGLVertexArrayObject _vao;
-    std::unique_ptr<QOpenGLShaderProgram> _program;
+    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
+    QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
+    QOpenGLBuffer m_ibo {QOpenGLBuffer::IndexBuffer};
+    QOpenGLVertexArrayObject m_vao;
+    std::unique_ptr<QOpenGLShaderProgram> m_program;
     GLuint _texture1 {0};
     GLuint _texture2 {0};
     int m_timer {0};

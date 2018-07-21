@@ -19,14 +19,14 @@ void Window::initializeGL()
         return;
     }
 
-    _funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
-    if (!_funcs) {
+    m_funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
+    if (!m_funcs) {
         qCritical() << "Can't get OGL 3.2";
         close();
         return;
     }
 
-    _funcs->initializeOpenGLFunctions();
+    m_funcs->initializeOpenGLFunctions();
 
     initializeGeometry();
     initializeShaders();
@@ -35,15 +35,15 @@ void Window::initializeGL()
 
 void Window::resizeGL(int w, int h)
 {
-    if (!_funcs)
+    if (!m_funcs)
         return;
 
-    _funcs->glViewport(0, 0, w, h);
+    m_funcs->glViewport(0, 0, w, h);
 }
 
 void Window::paintGL()
 {
-    if (!_funcs)
+    if (!m_funcs)
         return;
 
     auto time = QTime::currentTime();
@@ -51,29 +51,29 @@ void Window::paintGL()
     transform.translate({0.5, -0.5, 0.0});
     transform.rotate(6 * ((time.second() * 1000 + time.msec()) / 25 % 240), {0.0, 0.0, 1.0});
 
-    _funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    _funcs->glClear(GL_COLOR_BUFFER_BIT);
+    m_funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    m_funcs->glClear(GL_COLOR_BUFFER_BIT);
 
-    _program->bind();
+    m_program->bind();
 
-    _funcs->glActiveTexture(GL_TEXTURE0);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
-    _program->setUniformValue("ourTexture1", 0);
+    m_funcs->glActiveTexture(GL_TEXTURE0);
+    m_funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
+    m_program->setUniformValue("ourTexture1", 0);
 
-    _funcs->glActiveTexture(GL_TEXTURE1);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
-    _program->setUniformValue("ourTexture2", 1);
+    m_funcs->glActiveTexture(GL_TEXTURE1);
+    m_funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
+    m_program->setUniformValue("ourTexture2", 1);
 
-    _program->setUniformValue("transform", transform);
+    m_program->setUniformValue("transform", transform);
 
-    QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
-    _funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+    m_funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // release resources
-    _program->release();
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
-    _funcs->glActiveTexture(GL_TEXTURE0);
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    m_program->release();
+    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    m_funcs->glActiveTexture(GL_TEXTURE0);
+    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Window::timerEvent(QTimerEvent *event)
@@ -101,38 +101,38 @@ void Window::initializeGeometry()
                           1, 2, 3    // Второй треугольник
                        };
 
-    _vao.create();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
+    m_vao.create();
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
-    _vbo.create();
-    _vbo.bind();
-    _vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    _vbo.allocate(vertices, sizeof(vertices));
+    m_vbo.create();
+    m_vbo.bind();
+    m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    m_vbo.allocate(vertices, sizeof(vertices));
 
-    _ibo.create();
-    _ibo.bind();
-    _ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    _ibo.allocate(indices, sizeof(indices));
+    m_ibo.create();
+    m_ibo.bind();
+    m_ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    m_ibo.allocate(indices, sizeof(indices));
 
     // Атрибут с координатами
-    _funcs->glEnableVertexAttribArray(0);
-    _funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
+    m_funcs->glEnableVertexAttribArray(0);
+    m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
 
     // Атрибут с цветом
-    _funcs->glEnableVertexAttribArray(1);
-    _funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
+    m_funcs->glEnableVertexAttribArray(1);
+    m_funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
 
     // Атрибут с текстурой
-    _funcs->glEnableVertexAttribArray(2);
-    _funcs->glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+    m_funcs->glEnableVertexAttribArray(2);
+    m_funcs->glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 }
 
 void Window::initializeShaders()
 {
-    _program = std::make_unique<QOpenGLShaderProgram>();
-    _program->addShaderFromSourceFile(QOpenGLShader::Vertex, QStringLiteral(":/vshader.glsl"));
-    _program->addShaderFromSourceFile(QOpenGLShader::Fragment, QStringLiteral(":/fshader.glsl"));
-    _program->link();
+    m_program = std::make_unique<QOpenGLShaderProgram>();
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, QStringLiteral(":/vshader.glsl"));
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, QStringLiteral(":/fshader.glsl"));
+    m_program->link();
 }
 
 void Window::initializeTextures()
@@ -152,11 +152,11 @@ GLuint Window::createTexture(QStringView path)
     image = image.convertToFormat(QImage::Format_RGBA8888);
 
     GLuint result {0};
-    _funcs->glGenTextures(1, &result);
-    _funcs->glBindTexture(GL_TEXTURE_2D, result);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    _funcs->glGenerateMipmap(GL_TEXTURE_2D);
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    m_funcs->glGenTextures(1, &result);
+    m_funcs->glBindTexture(GL_TEXTURE_2D, result);
+    m_funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+    m_funcs->glGenerateMipmap(GL_TEXTURE_2D);
+    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
 
     return result;
 }
