@@ -4,32 +4,6 @@
 #include <QCoreApplication>
 #include <QTime>
 
-const char* const vertexShaderSource = "\n"
-"#version 330 core \n"
-
-"in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-
-"out vec3 ourColor;\n"
-
-"void main()\n"
-"{\n"
-"    gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-"    ourColor = color;\n"
-"}";
-
-const char *const fragmentShaderSource =
-"#version 330 core\n"
-
-"in vec3 ourColor;\n"
-"out vec4 color;\n"
-
-"void main()\n"
-"{\n"
-"    color = vec4(ourColor, 1.0f);\n"
-"}"
-;
-
 Window::Window()
 {
     resize(640, 480);
@@ -109,7 +83,7 @@ void Window::initializeGeometry()
 void Window::initializeShaders()
 {
     _program = std::make_unique<QOpenGLShaderProgram>();
-    _program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
-    _program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    _program->addShaderFromSourceFile(QOpenGLShader::Vertex, QStringLiteral(":/vshader.glsl"));
+    _program->addShaderFromSourceFile(QOpenGLShader::Fragment, QStringLiteral(":/fshader.glsl"));
     _program->link();
 }
