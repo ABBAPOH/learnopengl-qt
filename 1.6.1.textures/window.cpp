@@ -9,6 +9,14 @@ Window::Window()
     resize(640, 480);
 }
 
+Window::~Window()
+{
+    makeCurrent();
+    _texture1.reset();
+    _texture2.reset();
+    doneCurrent();
+}
+
 void Window::initializeGL()
 {
     if (!context()) {
@@ -50,11 +58,11 @@ void Window::paintGL()
     _program->bind();
 
     _funcs->glActiveTexture(GL_TEXTURE0);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
+    _texture1->bind();
     _program->setUniformValue("ourTexture1", 0);
 
     _funcs->glActiveTexture(GL_TEXTURE1);
-    _funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
+    _texture2->bind();
     _program->setUniformValue("ourTexture2", 1);
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
@@ -62,9 +70,9 @@ void Window::paintGL()
 
     // release resources
     _program->release();
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    _texture2->release();
     _funcs->glActiveTexture(GL_TEXTURE0);
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    _texture1->release();
 }
 
 void Window::initializeGeometry()
@@ -79,10 +87,11 @@ void Window::initializeGeometry()
         -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // Верхний левый
     };
 
-    GLuint indices[] = {  // Помните, что мы начинаем с 0!
-                          0, 1, 3,   // Первый треугольник
-                          1, 2, 3    // Второй треугольник
-                       };
+    GLuint indices[] = {
+        // Помните, что мы начинаем с 0!
+        0, 1, 3,   // Первый треугольник
+        1, 2, 3    // Второй треугольник
+    };
 
     _vao.create();
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
@@ -120,26 +129,6 @@ void Window::initializeShaders()
 
 void Window::initializeTextures()
 {
-    _texture1 = createTexture(u":/container.jpg");
-    _texture2 = createTexture(u":/awesomeface.png");
-}
-
-GLuint Window::createTexture(QStringView path)
-{
-    QImage image(path.toString());
-    if (image.isNull()) {
-        qCritical() << "Can't load image" << path;
-        close();
-        return 0;
-    }
-    image = image.convertToFormat(QImage::Format_RGBA8888);
-
-    GLuint result {0};
-    _funcs->glGenTextures(1, &result);
-    _funcs->glBindTexture(GL_TEXTURE_2D, result);
-    _funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    _funcs->glGenerateMipmap(GL_TEXTURE_2D);
-    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
-
-    return result;
+    _texture1 = std::make_unique<QOpenGLTexture>(QImage(":/container.jpg"));
+    _texture2 = std::make_unique<QOpenGLTexture>(QImage(":/awesomeface.png"));
 }

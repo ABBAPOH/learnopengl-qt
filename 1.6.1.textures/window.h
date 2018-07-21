@@ -6,6 +6,7 @@
 #include <QtGui/QOpenGLBuffer>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLShaderProgram>
+#include <QtGui/QOpenGLTexture>
 
 #include <QOpenGLFunctions_3_3_Core>
 
@@ -13,6 +14,7 @@ class Window : public QOpenGLWindow
 {
 public:
     Window();
+    ~Window() override;
 
 protected:
     void initializeGL() override;
@@ -23,7 +25,6 @@ private:
     void initializeGeometry();
     void initializeShaders();
     void initializeTextures();
-    GLuint createTexture(QStringView path);
 
 private:
     QOpenGLFunctions_3_3_Core *_funcs {nullptr};
@@ -31,8 +32,8 @@ private:
     QOpenGLBuffer _ibo {QOpenGLBuffer::IndexBuffer};
     QOpenGLVertexArrayObject _vao;
     std::unique_ptr<QOpenGLShaderProgram> _program;
-    GLuint _texture1 {0};
-    GLuint _texture2 {0};
+    std::unique_ptr<QOpenGLTexture> _texture1;
+    std::unique_ptr<QOpenGLTexture> _texture2;
 };
 
 #endif // WINDOW_H
