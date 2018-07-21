@@ -23,10 +23,9 @@ Project {
         ]
 
         files: [
-            "main.cpp",
-            "textures.qrc",
-            "window.cpp",
-            "window.h",
+            "*.cpp",
+            "*.h",
+            "*.qrc",
         ]
 
         Group {     // Properties for the produced executable
