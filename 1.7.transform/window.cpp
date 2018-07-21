@@ -11,6 +11,14 @@ Window::Window()
     m_timer = startTimer(40);
 }
 
+Window::~Window()
+{
+    makeCurrent();
+    m_texture1.reset();
+    m_texture2.reset();
+    doneCurrent();
+}
+
 void Window::initializeGL()
 {
     if (!context()) {
@@ -57,11 +65,11 @@ void Window::paintGL()
     m_program->bind();
 
     m_funcs->glActiveTexture(GL_TEXTURE0);
-    m_funcs->glBindTexture(GL_TEXTURE_2D, _texture1);
+    m_texture1->bind();
     m_program->setUniformValue("ourTexture1", 0);
 
     m_funcs->glActiveTexture(GL_TEXTURE1);
-    m_funcs->glBindTexture(GL_TEXTURE_2D, _texture2);
+    m_texture2->bind();
     m_program->setUniformValue("ourTexture2", 1);
 
     m_program->setUniformValue("transform", transform);
@@ -71,9 +79,9 @@ void Window::paintGL()
 
     // release resources
     m_program->release();
-    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    m_texture2->release();
     m_funcs->glActiveTexture(GL_TEXTURE0);
-    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    m_texture1->release();
 }
 
 void Window::timerEvent(QTimerEvent *event)
@@ -137,26 +145,7 @@ void Window::initializeShaders()
 
 void Window::initializeTextures()
 {
-    _texture1 = createTexture(u":/container.jpg");
-    _texture2 = createTexture(u":/awesomeface.png");
+    m_texture1 = std::make_unique<QOpenGLTexture>(QImage(":/container.jpg"));
+    m_texture2 = std::make_unique<QOpenGLTexture>(QImage(":/awesomeface.png"));
 }
 
-GLuint Window::createTexture(QStringView path)
-{
-    QImage image(path.toString());
-    if (image.isNull()) {
-        qCritical() << "Can't load image" << path;
-        close();
-        return 0;
-    }
-    image = image.convertToFormat(QImage::Format_RGBA8888);
-
-    GLuint result {0};
-    m_funcs->glGenTextures(1, &result);
-    m_funcs->glBindTexture(GL_TEXTURE_2D, result);
-    m_funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    m_funcs->glGenerateMipmap(GL_TEXTURE_2D);
-    m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
-
-    return result;
-}
