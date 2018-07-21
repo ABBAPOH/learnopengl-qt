@@ -44,7 +44,6 @@ void Window::initializeGL()
         return;
     }
     _funcs->initializeOpenGLFunctions();
-    _funcs->glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     qInfo() << "real OGL version" << (char *)_funcs->glGetString(GL_VERSION);
 
@@ -70,7 +69,7 @@ void Window::paintGL()
 
     _program->bind();
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
-    _funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    _funcs->glDrawArrays(GL_TRIANGLES, 0, 3);
     _program->release();
 }
 
@@ -79,14 +78,10 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        0.5f,  0.5f, 0.0f,  // Верхний правый угол
+        // Позиции
         0.5f, -0.5f, 0.0f,  // Нижний правый угол
-        -0.5f, -0.5f, 0.0f,  // Нижний левый угол
-        -0.5f,  0.5f, 0.0f   // Верхний левый угол
-    };
-    GLuint indices[] = {  // Помните, что мы начинаем с 0!
-        0, 1, 3,   // Первый треугольник
-        1, 2, 3    // Второй треугольник
+        -0.5f, -0.5f, 0.0f, // Нижний левый угол
+        0.0f,  0.5f, 0.0f,  // Верхний угол
     };
 
     _vao.create();
@@ -96,11 +91,6 @@ void Window::initializeGeometry()
     _vbo.bind();
     _vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     _vbo.allocate(vertices, sizeof(vertices));
-
-    _ibo.create();
-    _ibo.bind();
-    _ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    _ibo.allocate(indices, sizeof(indices));
 
     _funcs->glEnableVertexAttribArray(0);
     _funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
