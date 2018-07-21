@@ -68,7 +68,11 @@ void Window::paintGL()
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
     _funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // release resources
     _program->release();
+    _funcs->glBindTexture(GL_TEXTURE_2D, 0);
+    _funcs->glActiveTexture(GL_TEXTURE0);
     _funcs->glBindTexture(GL_TEXTURE_2D, 0);
 }
 
