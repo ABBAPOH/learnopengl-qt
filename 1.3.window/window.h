@@ -15,7 +15,7 @@ protected:
     void paintGL() override;
 
 private:
-    QOpenGLFunctions_3_3_Core *_funcs {nullptr};
+    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
 };
 
 #endif // WINDOW_H
