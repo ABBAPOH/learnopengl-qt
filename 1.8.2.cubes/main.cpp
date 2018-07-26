@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(fmt);
 
     Window w;
-    QTimer::singleShot(0, &w, &Window::show);
+    w.show();
 
     return QCoreApplication::exec();
 }

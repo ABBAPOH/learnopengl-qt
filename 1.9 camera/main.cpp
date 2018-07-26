@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 
     Window w;
-    QTimer::singleShot(0, &w, &Window::show);
+    w.show();
 
     return QCoreApplication::exec();
 }
