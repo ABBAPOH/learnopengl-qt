@@ -1,13 +1,11 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QtGui/QOpenGLWindow>
-#include <QtGui/QOpenGLFunctions>
 #include <QtGui/QOpenGLBuffer>
-#include <QtGui/QOpenGLVertexArrayObject>
+#include <QtGui/QOpenGLFunctions_3_3_Core>
 #include <QtGui/QOpenGLShaderProgram>
-
-#include <QOpenGLFunctions_3_3_Core>
+#include <QtGui/QOpenGLVertexArrayObject>
+#include <QtGui/QOpenGLWindow>
 
 class Window : public QOpenGLWindow
 {
@@ -24,10 +22,10 @@ private:
     void initializeShaders();
 
 private:
-    QOpenGLFunctions_3_3_Core *_funcs {nullptr};
-    QOpenGLBuffer _vbo {QOpenGLBuffer::VertexBuffer};
-    QOpenGLVertexArrayObject _vao;
-    std::unique_ptr<QOpenGLShaderProgram> _program;
+    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
+    QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
+    QOpenGLVertexArrayObject m_vao;
+    std::unique_ptr<QOpenGLShaderProgram> m_program;
 };
 
 #endif // WINDOW_H
