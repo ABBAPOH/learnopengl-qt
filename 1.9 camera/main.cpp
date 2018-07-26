@@ -14,9 +14,6 @@ int main(int argc, char *argv[])
     fmt.setProfile(QSurfaceFormat::CoreProfile);
     QSurfaceFormat::setDefaultFormat(fmt);
 
-    std::unique_ptr<QObject> p = std::make_unique<QObject>();
-
-
     Window w;
     w.show();
 
