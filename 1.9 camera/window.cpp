@@ -1,9 +1,11 @@
 #include "window.h"
 
-#include <QDebug>
-#include <QCoreApplication>
-#include <QTime>
-#include <QKeyEvent>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QWheelEvent>
+
+#include <QtCore/QDebug>
+#include <QtCore/QTime>
 
 #include <math.h>
 
