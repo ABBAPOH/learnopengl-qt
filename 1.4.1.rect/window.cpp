@@ -1,7 +1,6 @@
 #include "window.h"
 
-#include <QDebug>
-#include <QCoreApplication>
+#include <QtCore/QDebug>
 
 const char* const vertexShaderSource =
 "#version 330 core \n"
@@ -37,13 +36,13 @@ void Window::initializeGL()
         return;
     }
 
-    _funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
-    if (!_funcs) {
+    m_funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
+    if (!m_funcs) {
         qCritical() << "Can't get OGL 3.2";
         close();
         return;
     }
-    _funcs->initializeOpenGLFunctions();
+    m_funcs->initializeOpenGLFunctions();
 
     initializeGeometry();
     initializeShaders();
@@ -51,24 +50,24 @@ void Window::initializeGL()
 
 void Window::resizeGL(int w, int h)
 {
-    if (!_funcs)
+    if (!m_funcs)
         return;
 
-    _funcs->glViewport(0, 0, w, h);
+    m_funcs->glViewport(0, 0, w, h);
 }
 
 void Window::paintGL()
 {
-    if (!_funcs)
+    if (!m_funcs)
         return;
 
-    _funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    _funcs->glClear(GL_COLOR_BUFFER_BIT);
+    m_funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    m_funcs->glClear(GL_COLOR_BUFFER_BIT);
 
-    _program->bind();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
-    _funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    _program->release();
+    m_program->bind();
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+    m_funcs->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    m_program->release();
 }
 
 void Window::initializeGeometry()
@@ -86,27 +85,27 @@ void Window::initializeGeometry()
         1, 2, 3    // Второй треугольник
     };
 
-    _vao.create();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&_vao);
+    m_vao.create();
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
-    _vbo.create();
-    _vbo.bind();
-    _vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    _vbo.allocate(vertices, sizeof(vertices));
+    m_vbo.create();
+    m_vbo.bind();
+    m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    m_vbo.allocate(vertices, sizeof(vertices));
 
-    _ibo.create();
-    _ibo.bind();
-    _ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    _ibo.allocate(indices, sizeof(indices));
+    m_ibo.create();
+    m_ibo.bind();
+    m_ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    m_ibo.allocate(indices, sizeof(indices));
 
-    _funcs->glEnableVertexAttribArray(0);
-    _funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+    m_funcs->glEnableVertexAttribArray(0);
+    m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
 }
 
 void Window::initializeShaders()
 {
-    _program = std::make_unique<QOpenGLShaderProgram>();
-    _program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
-    _program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
-    _program->link();
+    m_program = std::make_unique<QOpenGLShaderProgram>();
+    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
+    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    m_program->link();
 }
