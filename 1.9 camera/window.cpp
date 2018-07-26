@@ -182,6 +182,14 @@ void Window::mouseMoveEvent(QMouseEvent *event)
     QWindow::mouseMoveEvent(event);
 }
 
+void Window::wheelEvent(QWheelEvent *event)
+{
+    const auto sensitivity = 0.1;
+    m_fov = qBound(1.0, m_fov - event->delta() * sensitivity, 45.0);
+    updateMatrixes();
+    QWindow::wheelEvent(event);
+}
+
 void Window::initializeGeometry()
 {
     // setup vertex data
@@ -302,5 +310,5 @@ void Window::updateMatrixes()
         m_cameraPos += QVector3D::crossProduct(m_cameraFront, cameraUp).normalized() * cameraSpeed;
 
     m_view.lookAt(m_cameraPos, m_cameraPos + m_cameraFront, {0.0f, 1.0f, 0.0f});
-    m_projection.perspective(45.0, 1.0 * width() / height(), 0.1, 100.0);
+    m_projection.perspective(m_fov, 1.0 * width() / height(), 0.1, 100.0);
 }

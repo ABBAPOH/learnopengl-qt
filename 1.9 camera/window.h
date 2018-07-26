@@ -26,6 +26,7 @@ protected:
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     void initializeGeometry();
@@ -59,9 +60,10 @@ private:
 
     std::vector<QVector3D> m_cubePositions;
 
-    GLfloat m_yaw = -90.0f;
-    GLfloat m_pitch = 0.0f;
+    float m_yaw = -90.0f;
+    float m_pitch = 0.0f;
     bool m_blockMove {false};
+    float m_fov {45.0};
 };
 
 #endif // WINDOW_H
