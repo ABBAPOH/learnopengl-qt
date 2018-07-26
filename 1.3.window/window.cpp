@@ -1,7 +1,6 @@
 #include "window.h"
 
-#include <QDebug>
-#include <QCoreApplication>
+#include <QtCore/QDebug>
 
 Window::Window()
 {
