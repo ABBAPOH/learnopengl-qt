@@ -1,5 +1,4 @@
 #include <QGuiApplication>
-#include <QTimer>
 
 #include "window.h"
 
