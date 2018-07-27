@@ -1,28 +1,16 @@
 #include "window.h"
+#include "camera.h"
 
 #include <QtGui/QKeyEvent>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QWheelEvent>
 
 #include <QtCore/QDebug>
-#include <QtCore/QTime>
 
-#include <math.h>
-
-constexpr float radians(float angle)
-{
-    return angle * float(M_PI) / 180.0;
-}
-
-Window::Window()
+Window::Window() :
+    m_camera(std::make_unique<Camera>())
 {
     resize(640, 480);
 
-    auto cursor = QCursor();
-    cursor.setShape(Qt::BlankCursor);
-    setCursor(cursor);
-
-    m_timer = startTimer(25);
+    m_camera->setWindow(this);
 }
 
 Window::~Window()
@@ -54,21 +42,22 @@ void Window::initializeGL()
     initializeGeometry();
     initializeShaders();
     initializeTextures();
-    updateMatrixes();
 }
 
 void Window::resizeGL(int w, int h)
 {
-    if (!m_funcs)
+    if (!m_funcs) {
         return;
+    }
 
     m_funcs->glViewport(0, 0, w, h);
 }
 
 void Window::paintGL()
 {
-    if (!m_funcs)
+    if (!m_funcs) {
         return;
+    }
 
     m_funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,8 +78,8 @@ void Window::paintGL()
         model.rotate(20.0 * i, {1.0f, 0.3f, 0.5f});
 
         m_program->setUniformValue("model", model);
-        m_program->setUniformValue("view", m_view);
-        m_program->setUniformValue("projection", m_projection);
+        m_program->setUniformValue("view", m_camera->view());
+        m_program->setUniformValue("projection", m_camera->projection());
 
         QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
         m_funcs->glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -103,93 +92,12 @@ void Window::paintGL()
     m_texture1->release();
 }
 
-void Window::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == m_timer) {
-        updateMatrixes();
-        update();
-    }
-    QOpenGLWindow::timerEvent(event);
-}
-
 void Window::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Escape)
+    if (event->key() == Qt::Key_Escape) {
         close();
-    else if (event->key() == Qt::Key_W)
-        keyPressed[Forward] = true;
-    else if (event->key() == Qt::Key_S)
-        keyPressed[Backward] = true;
-    else if (event->key() == Qt::Key_A)
-        keyPressed[Left] = true;
-    else if (event->key() == Qt::Key_D)
-        keyPressed[Right] = true;
-    else
-        QWindow::keyPressEvent(event);
-}
-
-void Window::keyReleaseEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_W)
-        keyPressed[Forward] = false;
-    else if (event->key() == Qt::Key_S)
-        keyPressed[Backward] = false;
-    else if (event->key() == Qt::Key_A)
-        keyPressed[Left] = false;
-    else if (event->key() == Qt::Key_D)
-        keyPressed[Right] = false;
-    else
-        QWindow::keyReleaseEvent(event);
-}
-
-void Window::focusInEvent(QFocusEvent *event)
-{
-    setMouseGrabEnabled(true);
-    m_blockMove = true;
-    QCursor::setPos(geometry().center());
-    QWindow::focusInEvent(event);
-}
-
-void Window::focusOutEvent(QFocusEvent *event)
-{
-    setMouseGrabEnabled(false);
-    QWindow::focusOutEvent(event);
-}
-
-void Window::mouseMoveEvent(QMouseEvent *event)
-{
-    if (!m_blockMove) {
-        const auto sensitivity = 0.075f;
-        const auto size = geometry().size();
-        const auto center = QPointF(size.width() / 2.0, size.height() / 2.0);
-        const auto delta = event->localPos() - center;
-        const auto deltax = delta.x() * sensitivity;
-        const auto deltay = delta.y() * sensitivity;
-        m_yaw += deltax;
-        m_pitch = qBound(-89.0, m_pitch - deltay, 89.0);
-
-        QVector3D front {
-            cos(radians(m_pitch)) * cos(radians(m_yaw)),
-            sin(radians(m_pitch)),
-            cos(radians(m_pitch)) * sin(radians(m_yaw))
-        };
-        m_cameraFront = front.normalized();
-
-        m_blockMove = true;
-        QCursor::setPos(geometry().center());
-    } else {
-        m_blockMove = false;
     }
-
-    QWindow::mouseMoveEvent(event);
-}
-
-void Window::wheelEvent(QWheelEvent *event)
-{
-    const auto sensitivity = 0.1;
-    m_fov = qBound(1.0, m_fov - event->delta() * sensitivity, 45.0);
-    updateMatrixes();
-    QWindow::wheelEvent(event);
+    QWindow::keyPressEvent(event);
 }
 
 void Window::initializeGeometry()
@@ -284,33 +192,4 @@ void Window::initializeTextures()
 {
     m_texture1 = std::make_unique<QOpenGLTexture>(QImage(":/container.jpg"));
     m_texture2 = std::make_unique<QOpenGLTexture>(QImage(":/awesomeface.png"));
-}
-
-void Window::updateMatrixes()
-{
-    m_view = QMatrix4x4();
-    m_projection = QMatrix4x4();
-
-    const auto time = QTime::currentTime();
-    const auto angle = (time.second() * 1000 + time.msec()) / 25 % 360;
-    const auto radius = 15.0f;
-    const auto camX = sinf(angle * float(M_PI) / 180) * radius;
-    const auto camZ = cosf(angle * float(M_PI) / 180) * radius;
-
-//    m_view.lookAt({camX, 0.0f, camZ}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
-
-    QVector3D cameraUp {0.0f, 1.0f,  0.0f};
-    const auto cameraSpeed = 0.05f;
-
-    if (keyPressed[Forward])
-        m_cameraPos += cameraSpeed * m_cameraFront;
-    if (keyPressed[Backward])
-        m_cameraPos -= cameraSpeed * m_cameraFront;
-    if (keyPressed[Left])
-        m_cameraPos -= QVector3D::crossProduct(m_cameraFront, cameraUp).normalized() * cameraSpeed;
-    if (keyPressed[Right])
-        m_cameraPos += QVector3D::crossProduct(m_cameraFront, cameraUp).normalized() * cameraSpeed;
-
-    m_view.lookAt(m_cameraPos, m_cameraPos + m_cameraFront, {0.0f, 1.0f, 0.0f});
-    m_projection.perspective(m_fov, 1.0 * width() / height(), 0.1, 100.0);
 }
