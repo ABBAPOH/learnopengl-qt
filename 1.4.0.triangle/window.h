@@ -7,6 +7,8 @@
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtGui/QOpenGLWindow>
 
+#include <memory>
+
 class Window : public QOpenGLWindow
 {
 public:
