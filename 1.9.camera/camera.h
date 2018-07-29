@@ -40,6 +40,9 @@ public:
     float sensitivity() const noexcept { return m_sensitivity; }
     void setSensitivity(float sensitivity);
 
+    QVector3D position() const noexcept { return m_cameraPos; }
+    QVector3D front() const noexcept { return m_cameraFront; }
+
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 signals:
