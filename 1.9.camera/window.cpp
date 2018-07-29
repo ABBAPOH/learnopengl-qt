@@ -105,7 +105,7 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        // Позиции            // Текстурные координаты
+        // Positions            // Texture coords
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -157,11 +157,11 @@ void Window::initializeGeometry()
     m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     m_vbo.allocate(vertices, sizeof(vertices));
 
-    // Атрибут с координатами
+    // Vertexes attribute
     m_funcs->glEnableVertexAttribArray(0);
     m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), nullptr);
 
-    // Атрибут с текстурой
+    // Texture attribute
     m_funcs->glEnableVertexAttribArray(1);
     m_funcs->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     m_vbo.release();

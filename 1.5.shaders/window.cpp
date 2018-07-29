@@ -55,10 +55,10 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        // Позиции           // Цвета
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Нижний правый угол
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Нижний левый угол
-        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Верхний угол
+        // Positions           // Colors
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // Bottom right corner
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // Bottom left corner
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // Top corner
     };
 
     m_vao.create();
@@ -69,10 +69,10 @@ void Window::initializeGeometry()
     m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     m_vbo.allocate(vertices, sizeof(vertices));
 
-    // Атрибут с координатами
+    // Vertexes attribute
     m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     m_funcs->glEnableVertexAttribArray(0);
-    // Атрибут с цветом
+    // Colors attribute
     m_funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
     m_funcs->glEnableVertexAttribArray(1);
 }

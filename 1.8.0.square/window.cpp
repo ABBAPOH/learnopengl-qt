@@ -95,17 +95,17 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        // Позиции          // Текстурные координаты
-        0.5f,  0.5f, 0.0f,  1.0f, 1.0f,   // Верхний правый
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f,   // Нижний правый
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,   // Нижний левый
-        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f    // Верхний левый
+        // Positions          // Texture coords
+        0.5f,  0.5f, 0.0f,  1.0f, 1.0f,   // Top right
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f,   // Bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,   // Bottom left
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f    // Top left
     };
 
     GLuint indices[] = {
-        // Помните, что мы начинаем с 0!
-        0, 1, 3,   // Первый треугольник
-        1, 2, 3    // Второй треугольник
+        // Zero-based indexation
+        0, 1, 3,   // First triangle
+        1, 2, 3    // Second triangle
     };
 
     m_vao.create();
@@ -121,11 +121,11 @@ void Window::initializeGeometry()
     m_ibo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     m_ibo.allocate(indices, sizeof(indices));
 
-    // Атрибут с координатами
+    // Vertexes attribute
     m_funcs->glEnableVertexAttribArray(0);
     m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), nullptr);
 
-    // Атрибут с текстурой
+    // Texture attribute
     m_funcs->glEnableVertexAttribArray(1);
     m_funcs->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 }

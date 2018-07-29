@@ -75,10 +75,10 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        // Позиции
-        0.5f, -0.5f, 0.0f,  // Нижний правый угол
-        -0.5f, -0.5f, 0.0f, // Нижний левый угол
-        0.0f,  0.5f, 0.0f,  // Верхний угол
+        // Positions
+        0.5f, -0.5f, 0.0f,  // Bottom right corner
+        -0.5f, -0.5f, 0.0f, // Bottom left corner
+        0.0f,  0.5f, 0.0f,  // Top corner
     };
 
     m_vao.create();

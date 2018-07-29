@@ -75,14 +75,14 @@ void Window::initializeGeometry()
     // setup vertex data
 
     GLfloat vertices[] = {
-        0.5f,  0.5f, 0.0f,  // Верхний правый угол
-        0.5f, -0.5f, 0.0f,  // Нижний правый угол
-        -0.5f, -0.5f, 0.0f,  // Нижний левый угол
-        -0.5f,  0.5f, 0.0f   // Верхний левый угол
+        0.5f,  0.5f, 0.0f,  // Top right corner
+        0.5f, -0.5f, 0.0f,  // Bottom right corner
+        -0.5f, -0.5f, 0.0f,  // Bottom left corner
+        -0.5f,  0.5f, 0.0f   // Top left corner
     };
-    GLuint indices[] = {  // Помните, что мы начинаем с 0!
-        0, 1, 3,   // Первый треугольник
-        1, 2, 3    // Второй треугольник
+    GLuint indices[] = {  // Zero-based indexation
+        0, 1, 3,   // First triangle
+        1, 2, 3    // Second triangle
     };
 
     m_vao.create();

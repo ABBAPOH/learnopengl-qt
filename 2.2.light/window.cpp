@@ -131,11 +131,11 @@ void Window::initializeCubeGeometry()
     m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     m_vbo.allocate(vertices, sizeof(vertices));
 
-    // Vertexes
+    // Vertexes attribute
     m_funcs->glEnableVertexAttribArray(0);
     m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), nullptr);
 
-    // Normals
+    // Normals attribute
     m_funcs->glEnableVertexAttribArray(1);
     m_funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     m_vbo.release();
@@ -151,7 +151,7 @@ void Window::initializeLampGeometry()
     m_lampVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     m_lampVbo.allocate(vertices, sizeof(vertices));
 
-    // Vertexes
+    // Vertexes attribute
     m_funcs->glEnableVertexAttribArray(0);
     m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), nullptr);
 }
