@@ -65,6 +65,8 @@ private:
         Backward,
         Left,
         Right,
+        Up,
+        Down,
         KeyCount
     };
 

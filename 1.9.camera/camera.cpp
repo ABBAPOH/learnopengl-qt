@@ -113,6 +113,10 @@ void Camera::keyPressEvent(QKeyEvent *event)
         m_keyPressed[Left] = true;
     } else if (event->key() == Qt::Key_D) {
         m_keyPressed[Right] = true;
+    } else if (event->key() == Qt::Key_Space) {
+        m_keyPressed[Up] = true;
+    } else if (event->key() == Qt::Key_C) {
+        m_keyPressed[Down] = true;
     }
 }
 
@@ -126,6 +130,10 @@ void Camera::keyReleaseEvent(QKeyEvent *event)
         m_keyPressed[Left] = false;
     } else if (event->key() == Qt::Key_D) {
         m_keyPressed[Right] = false;
+    } else if (event->key() == Qt::Key_Space) {
+        m_keyPressed[Up] = false;
+    } else if (event->key() == Qt::Key_C) {
+        m_keyPressed[Down] = false;
     }
 }
 
@@ -205,6 +213,12 @@ void Camera::updateMatrixes()
     }
     if (m_keyPressed[Right]) {
         m_cameraPos += QVector3D::crossProduct(m_cameraFront, cameraUp).normalized() * m_cameraSpeed;
+    }
+    if (m_keyPressed[Up]) {
+        m_cameraPos += m_cameraSpeed * cameraUp;
+    }
+    if (m_keyPressed[Down]) {
+        m_cameraPos -= m_cameraSpeed * cameraUp;
     }
 
     m_view.lookAt(m_cameraPos, m_cameraPos + m_cameraFront, {0.0f, 1.0f, 0.0f});
