@@ -68,6 +68,7 @@ Window::~Window()
 {
     makeCurrent();
     m_texture->destroy();
+    m_textureSpecular->destroy();
     doneCurrent();
 }
 
