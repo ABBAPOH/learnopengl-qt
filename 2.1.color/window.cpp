@@ -138,7 +138,7 @@ void Window::initializeCubeGeometry()
 
     // Texture attribute
     m_funcs->glEnableVertexAttribArray(1);
-    m_funcs->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    m_funcs->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid *>(3 * sizeof(GLfloat)));
     m_vbo.release();
 }
 
