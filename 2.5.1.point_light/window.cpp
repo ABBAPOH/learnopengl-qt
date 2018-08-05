@@ -135,8 +135,19 @@ void Window::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape) {
         close();
+    } else if (event->key() == Qt::Key_F) {
+        toggleFullScreen();
     }
+
     QWindow::keyPressEvent(event);
+}
+
+void Window::toggleFullScreen()
+{
+    if (windowState() != Qt::WindowState::WindowFullScreen)
+        showFullScreen();
+    else
+        showNormal();
 }
 
 void Window::initializeCubeGeometry()

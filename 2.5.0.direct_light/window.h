@@ -25,6 +25,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
+    void toggleFullScreen();
     void initializeCubeGeometry();
     void initializeLampGeometry();
     void initializeShaders();
