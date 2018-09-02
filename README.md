@@ -1,3 +1,3 @@
-# learnopengl
+# LearnOpenGL-Qt
 
-Реализация примеров из статей https://habr.com/post/310790/ с использованием библиотеки Qt.
+An Qt-based implementation of the examples from [https://learnopengl.com](https://learnopengl.com) site.
