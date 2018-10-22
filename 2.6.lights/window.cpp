@@ -254,6 +254,20 @@ void Window::paintCube()
         lightIndex++;
     }
 
+    // spot light
+    m_program->setUniformValue("spotLight.position", m_camera->position());
+    m_program->setUniformValue("spotLight.direction", m_camera->front());
+    m_program->setUniformValue("spotLight.cutoff", cos(radians(12.5f)));
+    m_program->setUniformValue("spotLight.outerCutoff", cos(radians(17.5f)));
+
+    m_program->setUniformValue("spotLight.ambient", QVector3D(0.2f, 0.2f, 0.2f));
+    m_program->setUniformValue("spotLight.diffuse", QVector3D(0.5f, 0.5f, 0.5f));
+    m_program->setUniformValue("spotLight.specular", QVector3D(1.0f, 1.0f, 1.0f));
+
+    m_program->setUniformValue("spotLight.constant", 1.0f);
+    m_program->setUniformValue("spotLight.linear", 0.09f);
+    m_program->setUniformValue("spotLight.quadratic", 0.032f);
+
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
     for(unsigned int i = 0; i < 10; i++)
