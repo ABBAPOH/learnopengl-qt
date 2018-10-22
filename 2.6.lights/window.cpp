@@ -241,7 +241,6 @@ void Window::paintCube()
     int lightIndex = 0;
     for (const auto &lightPos: m_lightPositions) {
         const auto prefix = QByteArray("pointLights[") + QByteArray::number(lightIndex) + "].";
-        qDebug() << prefix;
         m_program->setUniformValue((prefix + "position").constData(), lightPos);
 
         m_program->setUniformValue((prefix + "ambient").constData(), QVector3D(0.2f, 0.2f, 0.2f));
