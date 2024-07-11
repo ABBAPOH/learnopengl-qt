@@ -21,4 +21,5 @@ Project {
         "2.5.2.spot_light/spot_light.qbs",
         "2.6.lights/lights.qbs",
     ]
+    qbsSearchPaths: "qbs"
 }
