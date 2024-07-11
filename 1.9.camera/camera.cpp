@@ -187,7 +187,7 @@ void Camera::mouseMoveEvent(QMouseEvent *event)
 void Camera::wheelEvent(QWheelEvent *event)
 {
     const auto sensitivity = 0.1;
-    m_fov = qBound(1.0, m_fov - event->angleDelta().ry() * sensitivity, 45.0);
+    m_fov = qBound(1.0, m_fov - event->angleDelta().rx() * sensitivity, 45.0);
     updateMatrixes();
 }
 

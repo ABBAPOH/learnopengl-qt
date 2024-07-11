@@ -10,6 +10,10 @@ class QFocusEvent;
 class QMouseEvent;
 class QWheelEvent;
 
+using QObjectPointer = QObject *;
+using QWindowPointer = QWindow *;
+Q_DECLARE_OPAQUE_POINTER(QWindowPointer);
+
 class Camera : public QObject
 {
     Q_OBJECT
@@ -19,9 +23,6 @@ class Camera : public QObject
     Q_PROPERTY(float sensitivity READ sensitivity WRITE setSensitivity NOTIFY sensitivityChanged)
 
 public:
-    using QObjectPointer = QObject *; // should be std::observer_ptr<QObject>
-    using QWindowPointer = QWindow *; // should be std::observer_ptr<QWindow>
-
     explicit Camera(QObjectPointer parent = nullptr);
     Camera(Camera &&) = delete;
     ~Camera() override = default;

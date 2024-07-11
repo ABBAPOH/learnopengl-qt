@@ -1,8 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QtGui/QOpenGLFunctions_3_3_Core>
-#include <QtGui/QOpenGLWindow>
+#include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLWindow>
 
 class Window : public QOpenGLWindow
 {

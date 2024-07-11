@@ -1,12 +1,12 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QtGui/QOpenGLBuffer>
-#include <QtGui/QOpenGLFunctions_3_3_Core>
-#include <QtGui/QOpenGLShaderProgram>
-#include <QtGui/QOpenGLTexture>
-#include <QtGui/QOpenGLVertexArrayObject>
-#include <QtGui/QOpenGLWindow>
+#include <QOpenGLBuffer>
+#include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLTexture>
+#include <QOpenGLVertexArrayObject>
+#include <QOpenGLWindow>
 
 #include <memory>
 
