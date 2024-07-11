@@ -8,9 +8,31 @@
 
 #include <cmath>
 
+#ifdef Q_OS_MAC
+#include <ApplicationServices/ApplicationServices.h>
+#endif
+
+void CheckIfProcessTrusted() {
+#ifdef Q_OS_MAC
+    CFStringRef keys[] = { kAXTrustedCheckOptionPrompt };
+    CFTypeRef values[] = { kCFBooleanTrue };
+    CFDictionaryRef options = CFDictionaryCreate(NULL,
+                                                 (const void **)&keys,
+                                                 (const void **)&values,
+                                                 sizeof(keys) / sizeof(keys[0]),
+                                                 &kCFTypeDictionaryKeyCallBacks,
+                                                 &kCFTypeDictionaryValueCallBacks);
+    if (!AXIsProcessTrustedWithOptions(options)) {
+        throw std::runtime_error("not a trusted trusted accessibility client");
+    }
+    CFRelease(options);
+#endif
+}
+
 Camera::Camera(QObjectPointer parent)
     : QObject(parent)
 {
+    CheckIfProcessTrusted();
     m_timer = startTimer(25);
 }
 
@@ -159,7 +181,7 @@ void Camera::mouseMoveEvent(QMouseEvent *event)
 
         const auto size = m_window->geometry().size();
         const auto center = QPointF(size.width() / 2.0, size.height() / 2.0);
-        const auto delta = event->localPos() - center;
+        const auto delta = event->position() - center;
         const auto deltax = delta.x() * m_sensitivity;
         const auto deltay = delta.y() * m_sensitivity;
         m_yaw += deltax;
