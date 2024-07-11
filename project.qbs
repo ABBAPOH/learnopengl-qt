@@ -1,5 +1,7 @@
 Project {
     name: "LearnOpenGL Qt"
+    minimumQbsVersion: "2.2.0"
+    qbsSearchPaths: "qbs"
     references: [
         "1.3.window/window.qbs",
         "1.4.0.triangle/triangle.qbs",
@@ -21,5 +23,4 @@ Project {
         "2.5.2.spot_light/spot_light.qbs",
         "2.6.lights/lights.qbs",
     ]
-    qbsSearchPaths: "qbs"
 }
