@@ -70,7 +70,7 @@ void Window::initializeGeometry()
     m_vbo.allocate(vertices, sizeof(vertices));
 
     // Vertexes attribute
-    m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<GLvoid *>0);
+    m_funcs->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), nullptr);
     m_funcs->glEnableVertexAttribArray(0);
     // Colors attribute
     m_funcs->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<GLvoid *>(3* sizeof(GLfloat)));
