@@ -22,10 +22,11 @@ void CheckIfProcessTrusted() {
                                                  sizeof(keys) / sizeof(keys[0]),
                                                  &kCFTypeDictionaryKeyCallBacks,
                                                  &kCFTypeDictionaryValueCallBacks);
-    if (!AXIsProcessTrustedWithOptions(options)) {
+    const bool trusted = AXIsProcessTrustedWithOptions(options);
+    CFRelease(options);
+    if (!trusted) {
         throw std::runtime_error("not a trusted trusted accessibility client");
     }
-    CFRelease(options);
 #endif
 }
 
