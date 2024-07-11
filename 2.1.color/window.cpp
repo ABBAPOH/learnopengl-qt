@@ -1,5 +1,5 @@
 #include "window.h"
-#include "camera.h"
+#include <camera.h>
 
 #if QT_VERSION >= 0x060000
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>

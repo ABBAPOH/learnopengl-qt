@@ -8,11 +8,6 @@
 
 #include <cmath>
 
-constexpr float radians(float angle)
-{
-    return angle * float(M_PI) / 180.0;
-}
-
 Camera::Camera(QObjectPointer parent)
     : QObject(parent)
 {

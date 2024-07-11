@@ -1,5 +1,5 @@
 #include "window.h"
-#include "camera.h"
+#include <camera.h>
 
 #if QT_VERSION >= 0x060000
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
@@ -59,11 +59,6 @@ constexpr const GLfloat vertices[] = {
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
-
-constexpr float radians(float angle)
-{
-    return angle * float(M_PI) / 180.0;
-}
 
 } // namespace
 

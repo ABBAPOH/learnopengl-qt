@@ -93,4 +93,9 @@ private:
     bool m_blockMove {false};
 };
 
+constexpr inline float radians(float angle)
+{
+    return angle * float(M_PI) / 180.0;
+}
+
 #endif // CAMERA_H
