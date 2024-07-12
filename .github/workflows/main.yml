@@ -27,3 +27,27 @@ jobs:
         qbs resolve
         qbs build
 
+  build-windows:
+    name: Build on Windows
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Qt
+      uses: ./.github/actions/download-qt
+      with:
+        toolchain: win64_msvc2019_64
+    - name: Install Qbs
+      run: choco install qbs
+    - name: Setup Qbs
+      run: |
+        qbs setup-toolchains --detect
+        qbs setup-qt $(which qmake).exe qt
+        qbs config profiles.qt.baseProfile MSVC2022-1-x86_x64
+        qbs config defaultProfile qt
+        qbs config --list
+      shell: bash
+    - name: Build
+      run: |
+        qbs resolve
+        qbs build
+      shell: bash
