@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build-macos:
+    name: Build on macOS
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Qt
+      uses: ./.github/actions/download-qt
+      with:
+        toolchain: clang_64
+    - name: Install Qbs
+      run: brew install qbs
+    - name: Setup Qbs
+      run: |
+        qbs setup-toolchains --detect
+        qbs setup-qt --detect
+        qbs config profiles.qt.baseProfile xcode_13_2_1-macosx-x86_64
+        qbs config defaultProfile qt
+        qbs config --list
+    - name: Build
+      run: |
+        qbs resolve
+        qbs build
+
