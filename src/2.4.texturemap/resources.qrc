@@ -4,7 +4,7 @@
         <file>vshader.glsl</file>
         <file>flamp.glsl</file>
         <file>vlamp.glsl</file>
-        <file>container2.png</file>
-        <file>container2_specular.png</file>
+        <file alias="container2.png">../../resources/textures/container2.png</file>
+        <file alias="container2_specular.png">../../resources/textures/container2_specular.png</file>
     </qresource>
 </RCC>
