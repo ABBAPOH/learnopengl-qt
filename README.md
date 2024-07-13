@@ -65,21 +65,21 @@ Qbs is available in [Chocolatey](https://community.chocolatey.org/packages/qbs#v
 $ choco install qbs
 ```
 
-#### Configuring Qbs
+### Configuring Qbs
 ```
 $ qbs setup-toolchains --detect
 $ qbs setup-qt $(which qmake) qt
 $ qbs config defaultProfile qt
 ```
 
-#### Buiding with Qbs
+### Buiding with Qbs
 From the source directory, run:
 ```
 $ qbs resolve
 $ qbs build
 ```
 
-#### Using IDE
+### Using IDE
 Or you can simply open the `project.qbs` file in QtCreator or the source directory in VScode.
 For VScode you might want to use the
 [Qbs plugin](https://marketplace.visualstudio.com/items?itemName=qbs-community.qbs-tools).
