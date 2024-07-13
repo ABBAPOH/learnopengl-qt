@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="container.jpg">../../resources/textures/container.jpg</file>
+        <file alias="container.jpg">../../../resources/textures/container.jpg</file>
         <file>fshader.glsl</file>
         <file>vshader.glsl</file>
     </qresource>
