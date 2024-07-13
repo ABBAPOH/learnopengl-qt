@@ -5,4 +5,8 @@ Project {
     references: [
         "src/src.qbs"
     ]
+    Product {
+        name: "resources"
+        files: "resources/**/*"
+    }
 }
