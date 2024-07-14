@@ -126,7 +126,7 @@ void Window::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape) {
         close();
     }
-    QWindow::keyPressEvent(event);
+    QOpenGLWindow::keyPressEvent(event);
 }
 
 void Window::initializeCubeGeometry()

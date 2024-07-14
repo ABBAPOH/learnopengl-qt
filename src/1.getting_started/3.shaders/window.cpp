@@ -4,6 +4,7 @@
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 #endif
 
+#include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
 
 Window::Window()
@@ -91,4 +92,12 @@ void Window::initializeShaders()
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, QStringLiteral(":/vshader.glsl"));
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, QStringLiteral(":/fshader.glsl"));
     m_program->link();
+}
+
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+    QOpenGLWindow::keyPressEvent(event);
 }

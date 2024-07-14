@@ -4,6 +4,7 @@
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 #endif
 
+#include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
 
 const char* const vertexShaderSource =
@@ -116,4 +117,12 @@ void Window::initializeShaders()
     m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
     m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
     m_program->link();
+}
+
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+    QOpenGLWindow::keyPressEvent(event);
 }

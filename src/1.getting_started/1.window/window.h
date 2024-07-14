@@ -13,6 +13,7 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     QOpenGLFunctions_3_3_Core *m_funcs {nullptr};

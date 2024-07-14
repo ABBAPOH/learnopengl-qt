@@ -4,6 +4,7 @@
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 #endif
 
+#include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
 
 Window::Window()
@@ -25,7 +26,7 @@ void Window::initializeGL()
     m_funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
 #endif
     if (!m_funcs) {
-        qCritical() << "Can't get OGL 3.2";
+        qCritical() << "Can't get OGL 3.3";
         close();
         return;
     }
@@ -51,3 +52,10 @@ void Window::paintGL()
     m_funcs->glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+    QOpenGLWindow::keyPressEvent(event);
+}

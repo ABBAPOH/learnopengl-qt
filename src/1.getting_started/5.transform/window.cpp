@@ -4,6 +4,7 @@
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 #endif
 
+#include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
@@ -92,6 +93,15 @@ void Window::paintGL()
     m_texture1->release();
 }
 
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+    QOpenGLWindow::keyPressEvent(event);
+}
+
+
 void Window::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == m_timer) {
@@ -153,4 +163,3 @@ void Window::initializeTextures()
     m_texture1 = std::make_unique<QOpenGLTexture>(QImage(":/container.jpg"));
     m_texture2 = std::make_unique<QOpenGLTexture>(QImage(":/awesomeface.png"));
 }
-

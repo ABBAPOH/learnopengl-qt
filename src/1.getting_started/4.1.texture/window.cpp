@@ -4,6 +4,7 @@
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 #endif
 
+#include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTime>
@@ -136,4 +137,12 @@ void Window::initializeTextures()
     m_funcs->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
     m_funcs->glGenerateMipmap(GL_TEXTURE_2D);
     m_funcs->glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Window::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        close();
+    }
+    QOpenGLWindow::keyPressEvent(event);
 }

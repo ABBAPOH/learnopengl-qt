@@ -147,7 +147,7 @@ void Window::keyPressEvent(QKeyEvent *event)
         toggleFullScreen();
     }
 
-    QWindow::keyPressEvent(event);
+    QOpenGLWindow::keyPressEvent(event);
 }
 
 void Window::toggleFullScreen()

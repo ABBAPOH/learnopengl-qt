@@ -20,6 +20,7 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    void keyPressEvent(QKeyEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
 
 private:

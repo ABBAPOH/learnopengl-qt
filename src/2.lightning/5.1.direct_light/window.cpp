@@ -146,7 +146,7 @@ void Window::keyPressEvent(QKeyEvent *event)
     } else if (event->key() == Qt::Key_F) {
         toggleFullScreen();
     }
-    QWindow::keyPressEvent(event);
+    QOpenGLWindow::keyPressEvent(event);
 }
 
 void Window::toggleFullScreen()
