@@ -211,8 +211,13 @@ void Window::initializeShaders()
 
 void Window::initializeTextures()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    m_texture = std::make_unique<QOpenGLTexture>(QImage(":/container2.png").flipped());
+    m_textureSpecular = std::make_unique<QOpenGLTexture>(QImage(":/container2_specular.png").flipped());
+#else
     m_texture = std::make_unique<QOpenGLTexture>(QImage(":/container2.png").mirrored());
     m_textureSpecular = std::make_unique<QOpenGLTexture>(QImage(":/container2_specular.png").mirrored());
+#endif
 }
 
 void Window::paintCube()
