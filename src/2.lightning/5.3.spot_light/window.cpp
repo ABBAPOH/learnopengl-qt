@@ -241,8 +241,8 @@ void Window::paintCube()
 
     m_program->setUniformValue("light.position", m_camera->position());
     m_program->setUniformValue("light.direction", m_camera->front());
-    m_program->setUniformValue("light.cutoff", cos(radians(12.5f)));
-    m_program->setUniformValue("light.outerCutoff", cos(radians(17.5f)));
+    m_program->setUniformValue("light.cutoff", std::cos(radians(12.5f)));
+    m_program->setUniformValue("light.outerCutoff", std::cos(radians(17.5f)));
 
     m_program->setUniformValue("light.ambient", QVector3D(0.2f, 0.2f, 0.2f));
     m_program->setUniformValue("light.diffuse", QVector3D(0.5f, 0.5f, 0.5f));

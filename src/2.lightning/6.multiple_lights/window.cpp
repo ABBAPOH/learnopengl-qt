@@ -265,8 +265,8 @@ void Window::paintCube()
     // spot light
     m_program->setUniformValue("spotLight.position", m_camera->position());
     m_program->setUniformValue("spotLight.direction", m_camera->front());
-    m_program->setUniformValue("spotLight.cutoff", cos(radians(12.5f)));
-    m_program->setUniformValue("spotLight.outerCutoff", cos(radians(17.5f)));
+    m_program->setUniformValue("spotLight.cutoff", std::cos(radians(12.5f)));
+    m_program->setUniformValue("spotLight.outerCutoff", std::cos(radians(17.5f)));
 
     m_program->setUniformValue("spotLight.ambient", QVector3D(0.2f, 0.2f, 0.2f));
     m_program->setUniformValue("spotLight.diffuse", QVector3D(0.5f, 0.5f, 0.5f));
