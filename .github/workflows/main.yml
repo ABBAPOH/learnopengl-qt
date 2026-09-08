@@ -17,6 +17,7 @@ jobs:
       uses: ./.github/actions/download-qt
       with:
         toolchain: gcc_64
+        components: qtbase icu
     - name: Install Qbs
       uses: ./.github/actions/download-qbs
     - name: Setup Qbs

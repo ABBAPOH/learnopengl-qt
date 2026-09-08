@@ -12,11 +12,15 @@ inputs:
   toolchain:
     description: 'Qt toolchain'
     required: true
+  components:
+    description: 'Qt components to install'
+    required: false
+    default: 'qtbase'
 runs:
   using: "composite"
   steps:
     - name: Install Qt
       run: |
-        QT_DIR=$(./scripts/install-qt.sh -d $HOME/Qt --version ${{ inputs.version }} --target ${{ inputs.target }} --toolchain ${{ inputs.toolchain }} qtbase)
+        QT_DIR=$(./scripts/install-qt.sh -d $HOME/Qt --version ${{ inputs.version }} --target ${{ inputs.target }} --toolchain ${{ inputs.toolchain }} ${{ inputs.components }})
         (cygpath -w ${QT_DIR} 2>/dev/null || echo ${QT_DIR}) >> ${GITHUB_PATH}
       shell: bash
