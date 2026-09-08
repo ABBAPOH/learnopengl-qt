@@ -61,7 +61,7 @@ jobs:
     - name: Install Qt
       uses: ./.github/actions/download-qt
       with:
-        toolchain: win64_msvc2019_64
+        toolchain: win64_msvc2022_64
     - name: Install Qbs
       uses: ./.github/actions/download-qbs
     - name: Setup Qbs
