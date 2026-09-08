@@ -2,6 +2,8 @@ StaticLibrary {
     Depends { name: "cpp" }
     Depends { name: "Qt.core" }
     Depends { name: "Qt.gui" }
+    Depends { name: "bundle" }
+    bundle.isBundle: false
 
     cpp.cxxLanguageVersion: "c++14"
 
