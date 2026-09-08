@@ -4,6 +4,32 @@ on:
   push:
 
 jobs:
+  build-linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libgl1-mesa-dev libglu1-mesa-dev libxkbcommon-dev libxcb-cursor-dev p7zip-full
+    - name: Install Qt
+      uses: ./.github/actions/download-qt
+      with:
+        toolchain: gcc_64
+    - name: Install Qbs
+      uses: ./.github/actions/download-qbs
+    - name: Setup Qbs
+      run: |
+        qbs setup-toolchains --detect
+        qbs setup-qt $(which qmake) qt
+        qbs config defaultProfile qt
+        qbs config --list
+    - name: Build
+      run: |
+        qbs resolve
+        qbs build
+
   build-macos:
     name: Build on macOS
     runs-on: macos-12
@@ -14,7 +40,7 @@ jobs:
       with:
         toolchain: clang_64
     - name: Install Qbs
-      run: brew install qbs
+      uses: ./.github/actions/download-qbs
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -37,7 +63,7 @@ jobs:
       with:
         toolchain: win64_msvc2019_64
     - name: Install Qbs
-      run: choco install qbs
+      uses: ./.github/actions/download-qbs
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
