@@ -4,7 +4,7 @@ inputs:
   version:
     description: 'Qbs version'
     required: false
-    default: '3.0.3'
+    default: '3.3.1'
 runs:
   using: "composite"
   steps:
