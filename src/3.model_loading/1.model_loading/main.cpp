@@ -2,8 +2,6 @@
 
 #include "window.h"
 
-#include <assimp/Importer.hpp>
-
 int main(int argc, char *argv[])
 {
     QGuiApplication a(argc, argv);

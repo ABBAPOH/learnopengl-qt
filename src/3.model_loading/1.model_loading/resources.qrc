@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fshader.glsl</file>
+        <file>vshader.glsl</file>
+        <file alias="objects/backpack/backpack.obj">../../../resources/objects/backpack/backpack.obj</file>
+        <file alias="objects/backpack/backpack.mtl">../../../resources/objects/backpack/backpack.mtl</file>
+        <file alias="objects/backpack/diffuse.jpg">../../../resources/objects/backpack/diffuse.jpg</file>
+        <file alias="objects/backpack/specular.jpg">../../../resources/objects/backpack/specular.jpg</file>
+        <file alias="objects/backpack/normal.png">../../../resources/objects/backpack/normal.png</file>
+    </qresource>
+</RCC>

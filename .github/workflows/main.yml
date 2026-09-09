@@ -20,6 +20,18 @@ jobs:
         components: qtbase icu
     - name: Install Qbs
       uses: ./.github/actions/download-qbs
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
+    - name: Configure Conan remote
+      run: conan remote update conancenter --url="https://center2.conan.io"
+    - name: Setup Conan profiles
+      run: ./scripts/setup-conan-profiles.sh --toolchain gcc_64
+    - name: Patch Conan QbsDeps
+      run: ./scripts/patch-conan-qbsdeps.sh
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -28,8 +40,8 @@ jobs:
         qbs config --list
     - name: Build
       run: |
-        qbs resolve
-        qbs build
+        qbs resolve project.conanProfile:ci config:release
+        qbs build config:release
 
   build-macos:
     name: Build on macOS
@@ -42,6 +54,18 @@ jobs:
         toolchain: clang_64
     - name: Install Qbs
       uses: ./.github/actions/download-qbs
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
+    - name: Configure Conan remote
+      run: conan remote update conancenter --url="https://center2.conan.io"
+    - name: Setup Conan profiles
+      run: ./scripts/setup-conan-profiles.sh --toolchain clang_64
+    - name: Patch Conan QbsDeps
+      run: ./scripts/patch-conan-qbsdeps.sh
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -51,8 +75,8 @@ jobs:
         qbs config --list
     - name: Build
       run: |
-        qbs resolve
-        qbs build
+        qbs resolve project.conanProfile:ci config:release
+        qbs build config:release
 
   build-windows:
     name: Build on Windows
@@ -65,6 +89,21 @@ jobs:
         toolchain: win64_msvc2022_64
     - name: Install Qbs
       uses: ./.github/actions/download-qbs
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install Conan
+      uses: turtlebrowser/get-conan@main
+    - name: Configure Conan remote
+      run: conan remote update conancenter --url="https://center2.conan.io"
+      shell: bash
+    - name: Setup Conan profiles
+      run: ./scripts/setup-conan-profiles.sh --toolchain msvc_64
+      shell: bash
+    - name: Patch Conan QbsDeps
+      run: ./scripts/patch-conan-qbsdeps.sh
+      shell: bash
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -75,6 +114,6 @@ jobs:
       shell: bash
     - name: Build
       run: |
-        qbs resolve
-        qbs build
+        qbs resolve project.conanProfile:ci config:release
+        qbs build config:release
       shell: bash

@@ -1,0 +1,9 @@
+# Matches prebuilt assimp/6.0.5 on Conan Center (macOS armv8, apple-clang 17).
+[settings]
+arch=armv8
+build_type=Release
+compiler=apple-clang
+compiler.cppstd=gnu17
+compiler.libcxx=libc++
+compiler.version=17
+os=Macos

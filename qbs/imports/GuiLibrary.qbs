@@ -5,6 +5,8 @@ StaticLibrary {
     Depends { name: "bundle" }
     bundle.isBundle: false
 
+    qbsModuleProviders: ["Qt", "conan"]
+    moduleProviders.conan.installDirectory: project.conanInstallPath
     cpp.cxxLanguageVersion: "c++14"
 
     cpp.defines: [
