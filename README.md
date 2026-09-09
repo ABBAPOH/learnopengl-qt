@@ -1,7 +1,7 @@
 # LearnOpenGL-Qt
 [![GitHub actions](https://github.com/ABBAPOH/learnopengl-qt/actions/workflows/main.yml/badge.svg)](https://github.com/ABBAPOH/learnopengl-qt/actions/workflows/main.yml?query=event%3Apush)
 
-An Qt-based implementation of the examples from the [learnopengl.com](https://learnopengl.com)
+A Qt-based implementation of the examples from the [learnopengl.com](https://learnopengl.com)
 website.
 
 The original examples from the website can be found
@@ -17,7 +17,7 @@ Alternatively, you can use the `install-qt.sh` script from the `scripts` directo
 ```
 $ ./scripts/install-qt.sh -d $HOME/Qt --version 6.7.0 --target desktop qtbase
 ```
-This script requqres Bash-like Shell.
+This script requires Bash-like Shell.
 
 #### Ubuntu / Debian
 
@@ -72,7 +72,7 @@ $ qbs setup-qt $(which qmake) qt
 $ qbs config defaultProfile qt
 ```
 
-### Buiding with Qbs
+### Building with Qbs
 From the source directory, run:
 ```
 $ qbs resolve
