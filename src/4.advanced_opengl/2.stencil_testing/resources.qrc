@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="marble.jpg">../../../resources/textures/marble.jpg</file>
+        <file alias="metal.png">../../../resources/textures/metal.png</file>
+        <file>fshader_single_color.glsl</file>
+        <file>fshader.glsl</file>
+        <file>vshader.glsl</file>
+    </qresource>
+</RCC>
