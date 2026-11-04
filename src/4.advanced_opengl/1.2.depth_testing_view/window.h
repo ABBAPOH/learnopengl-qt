@@ -32,11 +32,13 @@ private:
 private:
     QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
     std::unique_ptr<Camera> m_camera;
-    QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
-    QOpenGLVertexArrayObject m_vao;
+    QOpenGLBuffer m_cubeVbo {QOpenGLBuffer::VertexBuffer};
+    QOpenGLBuffer m_planeVbo {QOpenGLBuffer::VertexBuffer};
+    QOpenGLVertexArrayObject m_cubeVao;
+    QOpenGLVertexArrayObject m_planeVao;
     std::unique_ptr<QOpenGLShaderProgram> m_program;
-    std::unique_ptr<QOpenGLTexture> m_texture1;
-    std::vector<QVector3D> m_cubePositions;
+    std::unique_ptr<QOpenGLTexture> m_cubeTexture;
+    std::unique_ptr<QOpenGLTexture> m_floorTexture;
 };
 
 #endif // WINDOW_H

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="container.jpg">../../../resources/textures/container.jpg</file>
+        <file alias="marble.jpg">../../../resources/textures/marble.jpg</file>
+        <file alias="metal.png">../../../resources/textures/metal.png</file>
         <file>fshader.glsl</file>
         <file>vshader.glsl</file>
     </qresource>
