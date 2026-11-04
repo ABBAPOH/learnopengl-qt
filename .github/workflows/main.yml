@@ -30,8 +30,6 @@ jobs:
       run: conan remote update conancenter --url="https://center2.conan.io"
     - name: Setup Conan profiles
       run: ./scripts/setup-conan-profiles.sh --toolchain gcc_64
-    - name: Patch Conan QbsDeps
-      run: ./scripts/patch-conan-qbsdeps.sh
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -64,8 +62,6 @@ jobs:
       run: conan remote update conancenter --url="https://center2.conan.io"
     - name: Setup Conan profiles
       run: ./scripts/setup-conan-profiles.sh --toolchain clang_64
-    - name: Patch Conan QbsDeps
-      run: ./scripts/patch-conan-qbsdeps.sh
     - name: Setup Qbs
       run: |
         qbs setup-toolchains --detect
@@ -100,9 +96,6 @@ jobs:
       shell: bash
     - name: Setup Conan profiles
       run: ./scripts/setup-conan-profiles.sh --toolchain msvc_64
-      shell: bash
-    - name: Patch Conan QbsDeps
-      run: ./scripts/patch-conan-qbsdeps.sh
       shell: bash
     - name: Setup Qbs
       run: |
