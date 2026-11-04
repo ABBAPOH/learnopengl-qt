@@ -87,7 +87,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
             indices.push_back(face.mIndices[j]);
     }
 
-    if (mesh->mMaterialIndex >= 0) {
+    if (mesh->mMaterialIndex < scene->mNumMaterials) {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         std::vector<Texture> diffuseMaps = loadMaterialTextures(
             material, aiTextureType_DIFFUSE, QStringLiteral("texture_diffuse"));
