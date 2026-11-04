@@ -22,7 +22,7 @@ This script requires Bash-like Shell.
 #### Ubuntu / Debian
 
 ```
-$ sudo apt install qt5-default
+$ sudo apt install qt6-base-dev
 ```
 
 #### macOS

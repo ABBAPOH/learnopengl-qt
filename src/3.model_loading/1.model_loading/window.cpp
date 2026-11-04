@@ -3,9 +3,7 @@
 #include "camera.h"
 #include "model.h"
 
-#if QT_VERSION >= 0x060000
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
-#endif
 
 #include <QtGui/QKeyEvent>
 
@@ -34,11 +32,7 @@ void Window::initializeGL()
         return;
     }
 
-#if QT_VERSION >= 0x060000
     m_funcs = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_3_3_Core>(context());
-#else
-    m_funcs = context()->versionFunctions<QOpenGLFunctions_3_3_Core>();
-#endif
     if (!m_funcs) {
         qCritical() << "Can't get OGL 3.3";
         close();

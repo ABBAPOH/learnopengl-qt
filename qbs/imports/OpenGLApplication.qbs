@@ -1,7 +1,7 @@
 CppApplication {
     Depends { name: "Qt.core" }
     Depends { name: "Qt.gui" }
-    Depends { name: "Qt.opengl"; condition: Qt.core.versionMajor >= 6 }
+    Depends { name: "Qt.opengl" }
     Depends { name: "assimp" }
 
     qbsModuleProviders: ["Qt", "conan"]
