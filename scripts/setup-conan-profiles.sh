@@ -62,3 +62,12 @@ echo $TOOLCHAIN
 mkdir -p "${HOME}/.conan2/profiles"
 SCRIPT_DIR=$( cd "$(dirname "$0")" ; pwd -P )
 cp ${SCRIPT_DIR}/conan-profiles/${HOST_OS}/${TOOLCHAIN}/* "${HOME}/.conan2/profiles"
+
+# Prefer the in-repo kuba-zip recipe. Conan Center still publishes the old
+# v0.3.0 archive checksum, which GitHub no longer serves.
+RECIPES_DIR=$(cd "${SCRIPT_DIR}/../conan" && pwd)
+conan remote add learnopengl-recipes "${RECIPES_DIR}" \
+    --type=local-recipes-index \
+    --index 0 \
+    --force \
+    --allowed-packages "kuba-zip/*"
