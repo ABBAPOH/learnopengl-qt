@@ -76,7 +76,7 @@ jobs:
 
   build-windows:
     name: Build on Windows
-    runs-on: windows-2025
+    runs-on: windows-2022
     steps:
     - uses: actions/checkout@v1
     - name: Install Qt
@@ -101,7 +101,7 @@ jobs:
       run: |
         qbs setup-toolchains --detect
         qbs setup-qt $(which qmake).exe qt
-        qbs config profiles.qt.baseProfile MSVC2022-1-x86_x64
+        qbs config profiles.qt.baseProfile MSVC2022-x64
         qbs config defaultProfile qt
         qbs config --list
       shell: bash
