@@ -4,5 +4,6 @@ Project {
         "1.2.depth_testing_view/depth_testing_view.qbs",
         "2.stencil_testing/stencil_testing.qbs",
         "3.1.blending_discard/blending_discard.qbs",
+        "3.2.blending_sort/blending_sort.qbs",
     ]
 }
