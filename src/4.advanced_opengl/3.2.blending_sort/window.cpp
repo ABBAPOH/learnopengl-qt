@@ -2,6 +2,7 @@
 #include <camera.h>
 
 #include <map>
+#include <ranges>
 
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 
@@ -119,9 +120,9 @@ void Window::paintGL()
     m_windowTexture->bind();
     {
         QOpenGLVertexArrayObject::Binder vaoBinder(&m_windowVao);
-        for (auto it = sortedWindows.rbegin(); it != sortedWindows.rend(); ++it) {
+        for (const auto &window : sortedWindows | std::views::reverse) {
             QMatrix4x4 model;
-            model.translate(it->second);
+            model.translate(window.second);
             m_program->setUniformValue("model", model);
             m_funcs->glDrawArrays(GL_TRIANGLES, 0, 6);
         }
