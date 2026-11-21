@@ -7,7 +7,7 @@ StaticLibrary {
 
     qbsModuleProviders: ["Qt", "conan"]
     moduleProviders.conan.installDirectory: project.conanInstallPath
-    cpp.cxxLanguageVersion: "c++14"
+    cpp.cxxLanguageVersion: "c++23"
 
     cpp.defines: [
         // The following define makes your compiler emit warnings if you use
