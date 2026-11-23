@@ -1,10 +1,9 @@
 module;
 
 #include <QtOpenGL/QOpenGLWindow>
+#include <QtOpenGL/QOpenGLFunctions_3_3_Core>
 
 export module window;
-
-class QOpenGLFunctions_3_3_Core;
 
 export class Window : public QOpenGLWindow
 {
