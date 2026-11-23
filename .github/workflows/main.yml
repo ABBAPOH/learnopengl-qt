@@ -70,7 +70,9 @@ jobs:
       run: |
         qbs setup-toolchains --detect
         qbs setup-qt --detect
-        qbs config profiles.qt.baseProfile xcode_13_2_1-macosx-x86_64
+        # llvm@20 is preinstalled and keg-only, so --detect never creates a profile.
+        qbs setup-toolchains --type clang "$(brew --prefix llvm@20)/bin/clang" llvm
+        qbs config profiles.qt.baseProfile llvm
         qbs config defaultProfile qt
         qbs config --list
     - name: Build
