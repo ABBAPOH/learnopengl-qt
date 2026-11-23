@@ -189,9 +189,9 @@ void Camera::mouseMoveEvent(QMouseEvent *event)
         m_pitch = qBound(-89.0, m_pitch - deltay, 89.0);
 
         QVector3D front {
-            cos(radians(m_pitch)) * cos(radians(m_yaw)),
-            sin(radians(m_pitch)),
-            cos(radians(m_pitch)) * sin(radians(m_yaw))
+            std::cos(radians(m_pitch)) * std::cos(radians(m_yaw)),
+            std::sin(radians(m_pitch)),
+            std::cos(radians(m_pitch)) * std::sin(radians(m_yaw))
         };
         m_cameraFront = front.normalized();
 
