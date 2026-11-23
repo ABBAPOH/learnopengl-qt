@@ -15,7 +15,7 @@ You can install Qt from the online installer from the Qt [website](https://www.q
 
 Alternatively, you can use the `install-qt.sh` script from the `scripts` directory.
 ```
-$ ./scripts/install-qt.sh -d $HOME/Qt --version 6.7.0 --target desktop qtbase
+$ ./scripts/install-qt.sh -d $HOME/Qt --version 6.12.0 --target desktop qtbase
 ```
 This script requires Bash-like Shell.
 
