@@ -72,6 +72,8 @@ jobs:
         qbs setup-qt --detect
         # llvm@20 is preinstalled and keg-only, so --detect never creates a profile.
         qbs setup-toolchains --type clang "$(brew --prefix llvm@20)/bin/clang" llvm
+        # Unlike Apple Clang, this compiler does not default to the macOS SDK.
+        qbs config profiles.llvm.cpp.sysroot "$(xcrun --sdk macosx --show-sdk-path)"
         qbs config profiles.qt.baseProfile llvm
         qbs config defaultProfile qt
         qbs config --list
