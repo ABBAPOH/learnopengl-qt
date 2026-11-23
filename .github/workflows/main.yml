@@ -34,6 +34,10 @@ jobs:
       run: |
         qbs setup-toolchains --detect
         qbs setup-qt $(which qmake) qt
+        # Qt 6.12 qobject_impl.h exposes an anonymous-namespace type from a
+        # module unit. GCC rejects that (https://bugreports.qt.io/browse/QTBUG-142513);
+        # a newer GCC does not change the header. Clang accepts it.
+        qbs config profiles.qt.baseProfile clang-18
         qbs config defaultProfile qt
         qbs config --list
     - name: Build
