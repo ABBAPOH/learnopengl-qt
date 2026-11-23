@@ -1,32 +1,24 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <basewindow.h>
+
 #include <QOpenGLBuffer>
-#include <QOpenGLFunctions>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLWindow>
 
 #include <memory>
 
-class Window : public QOpenGLWindow
+class Window : public BaseWindow
 {
-public:
-    Window();
-
 protected:
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void initializeScene() override;
+    void paintScene() override;
 
 private:
     void initializeGeometry();
     void initializeShaders();
 
-private:
-    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
     QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
     QOpenGLBuffer m_ibo {QOpenGLBuffer::IndexBuffer};
     QOpenGLVertexArrayObject m_vao;

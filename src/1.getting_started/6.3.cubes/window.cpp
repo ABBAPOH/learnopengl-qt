@@ -1,16 +1,7 @@
 #include "window.h"
 
-#include <QtOpenGL/QOpenGLVersionFunctionsFactory>
-
-#include <QtGui/QKeyEvent>
-#include <QtCore/QDebug>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QTime>
-
 Window::Window()
 {
-    resize(640, 480);
-
     m_timer = startTimer(40);
 }
 
@@ -22,22 +13,8 @@ Window::~Window()
     doneCurrent();
 }
 
-void Window::initializeGL()
+void Window::initializeScene()
 {
-    if (!context()) {
-        qCritical() << "Can't get OGL context";
-        close();
-        return;
-    }
-
-    m_funcs = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_3_3_Core>(context());
-    if (!m_funcs) {
-        qCritical() << "Can't get OGL 3.2";
-        close();
-        return;
-    }
-
-    m_funcs->initializeOpenGLFunctions();
     m_funcs->glEnable(GL_DEPTH_TEST);
 
     initializeGeometry();
@@ -46,19 +23,8 @@ void Window::initializeGL()
     initializeMatrixes();
 }
 
-void Window::resizeGL(int w, int h)
+void Window::paintScene()
 {
-    if (!m_funcs)
-        return;
-
-    m_funcs->glViewport(0, 0, w, h);
-}
-
-void Window::paintGL()
-{
-    if (!m_funcs)
-        return;
-
     m_funcs->glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -90,14 +56,6 @@ void Window::paintGL()
     m_texture2->release();
     m_funcs->glActiveTexture(GL_TEXTURE0);
     m_texture1->release();
-}
-
-void Window::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Escape) {
-        close();
-    }
-    QOpenGLWindow::keyPressEvent(event);
 }
 
 void Window::timerEvent(QTimerEvent *event)

@@ -1,19 +1,4 @@
 #include "window.h"
-#include <camera.h>
-
-#include <QtOpenGL/QOpenGLVersionFunctionsFactory>
-
-#include <QtGui/QKeyEvent>
-
-#include <QtCore/QDebug>
-
-Window::Window() :
-    m_camera(std::make_unique<Camera>())
-{
-    resize(640, 480);
-
-    m_camera->setWindow(this);
-}
 
 Window::~Window()
 {
@@ -23,23 +8,8 @@ Window::~Window()
     doneCurrent();
 }
 
-void Window::initializeGL()
+void Window::initializeScene()
 {
-    if (!context()) {
-        qCritical() << "Can't get OGL context";
-        close();
-        return;
-    }
-
-    m_funcs = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_3_3_Core>(context());
-    if (!m_funcs) {
-        qCritical() << "Can't get OGL 3.2";
-        close();
-        return;
-    }
-
-    m_funcs->initializeOpenGLFunctions();
-    m_funcs->glEnable(GL_DEPTH_TEST);
     m_funcs->glDepthFunc(GL_LESS);
     m_funcs->glEnable(GL_STENCIL_TEST);
     m_funcs->glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
@@ -50,21 +20,8 @@ void Window::initializeGL()
     initializeTextures();
 }
 
-void Window::resizeGL(int w, int h)
+void Window::paintScene()
 {
-    if (!m_funcs) {
-        return;
-    }
-
-    m_funcs->glViewport(0, 0, w, h);
-}
-
-void Window::paintGL()
-{
-    if (!m_funcs) {
-        return;
-    }
-
     m_funcs->glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -144,14 +101,6 @@ void Window::paintGL()
     m_funcs->glStencilMask(0xFF);
     m_funcs->glStencilFunc(GL_ALWAYS, 0, 0xFF);
     m_funcs->glEnable(GL_DEPTH_TEST);
-}
-
-void Window::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Escape) {
-        close();
-    }
-    QOpenGLWindow::keyPressEvent(event);
 }
 
 void Window::initializeGeometry()

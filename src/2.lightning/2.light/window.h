@@ -1,27 +1,21 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <camerawindow.h>
+
+#include <QVector3D>
+
 #include <QOpenGLBuffer>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLWindow>
 
 #include <memory>
 
-class Camera;
-
-class Window : public QOpenGLWindow
+class Window : public CameraWindow
 {
-public:
-    Window();
-    ~Window() override;
-
 protected:
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void initializeScene() override;
+    void paintScene() override;
 
 private:
     void initializeCubeGeometry();
@@ -31,8 +25,6 @@ private:
     void paintLamp();
 
 private:
-    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
-    std::unique_ptr<Camera> m_camera;
     QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
     QOpenGLVertexArrayObject m_vao;
     QOpenGLBuffer m_lampVbo {QOpenGLBuffer::VertexBuffer};

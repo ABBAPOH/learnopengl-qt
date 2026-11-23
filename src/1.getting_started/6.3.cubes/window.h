@@ -1,26 +1,27 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <basewindow.h>
+
+#include <QMatrix4x4>
 #include <QOpenGLBuffer>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLWindow>
+#include <QVector3D>
 
 #include <memory>
+#include <vector>
 
-class Window : public QOpenGLWindow
+class Window : public BaseWindow
 {
 public:
     Window();
     ~Window() override;
 
 protected:
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void initializeScene() override;
+    void paintScene() override;
     void timerEvent(QTimerEvent *event) override;
 
 private:
@@ -29,8 +30,6 @@ private:
     void initializeTextures();
     void initializeMatrixes();
 
-private:
-    QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
     QOpenGLBuffer m_vbo {QOpenGLBuffer::VertexBuffer};
     QOpenGLVertexArrayObject m_vao;
     std::unique_ptr<QOpenGLShaderProgram> m_program;
