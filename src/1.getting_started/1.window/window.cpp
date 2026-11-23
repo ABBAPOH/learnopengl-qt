@@ -1,5 +1,6 @@
 module;
 
+#include <QtOpenGL/QOpenGLFunctions_3_3_Core>
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
 
 #include <QtGui/QKeyEvent>
