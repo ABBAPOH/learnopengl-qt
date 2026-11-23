@@ -1,9 +1,12 @@
-#include "window.h"
+module;
 
 #include <QtOpenGL/QOpenGLVersionFunctionsFactory>
+#include <QtOpenGL/QOpenGLFunctions_3_3_Core>
 
 #include <QtGui/QKeyEvent>
 #include <QtCore/QDebug>
+
+module window;
 
 Window::Window()
 {

@@ -1,11 +1,14 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+module;
 
-#include <QOpenGLFunctions_3_3_Core>
-#include <QOpenGLWindow>
+#include <QtOpenGL/QOpenGLWindow>
 
-class Window : public QOpenGLWindow
+class QOpenGLFunctions_3_3_Core;
+
+export module window;
+
+export class Window : public QOpenGLWindow
 {
+    Q_OBJECT
 public:
     Window();
 
@@ -18,5 +21,3 @@ protected:
 private:
     QOpenGLFunctions_3_3_Core *m_funcs {nullptr};
 };
-
-#endif // WINDOW_H

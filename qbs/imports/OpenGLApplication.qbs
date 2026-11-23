@@ -8,6 +8,7 @@ CppApplication {
     moduleProviders.conan.installDirectory: project.conanInstallPath
 
     cpp.cxxLanguageVersion: "c++23"
+    cpp.forceUseCxxModules: true
 
     cpp.defines: [
         // The following define makes your compiler emit warnings if you use

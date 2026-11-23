@@ -4,6 +4,6 @@ OpenGLApplication {
     files: [
         "main.cpp",
         "window.cpp",
-        "window.h",
+        "window.cppm",
     ]
 }

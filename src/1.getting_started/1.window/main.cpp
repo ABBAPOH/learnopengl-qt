@@ -1,6 +1,7 @@
 #include <QtGui/QGuiApplication>
+#include <QtGui/QSurfaceFormat>
 
-#include "window.h"
+import window;
 
 int main(int argc, char *argv[])
 {
